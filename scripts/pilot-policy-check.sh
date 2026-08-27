@@ -6,8 +6,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 fail() { echo "PILOT POLICY FAILED: $*" >&2; exit 1; }
 
 echo "==> Host version"
-grep -q "Version: 0.1.0" "$ROOT/upr-host-adapter.php" || fail "plugin header version"
-grep -q "UPR_HOST_ADAPTER_VERSION', '0.1.0'" "$ROOT/upr-host-adapter.php" || fail "host version constant"
+grep -q "Version: 0.1.1" "$ROOT/upr-host-adapter.php" || fail "plugin header version"
+grep -q "UPR_HOST_ADAPTER_VERSION', '0.1.1'" "$ROOT/upr-host-adapter.php" || fail "host version constant"
 
 echo "==> Pilot policy class wired"
 test -f "$ROOT/includes/class-invitation-send-policy.php" || fail "missing invitation send policy"

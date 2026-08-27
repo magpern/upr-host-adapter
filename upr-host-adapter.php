@@ -2,7 +2,7 @@
 /**
  * Plugin Name: UPR Host Adapter
  * Description: Host-side adapters for Universal Product Reviews (delivery, support, pilot policy, DEV verification).
- * Version: 0.1.0
+ * Version: 0.1.1
  * Author: UPR Host Adapter contributors
  * Requires at least: 6.5
  * Requires PHP: 8.1
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'UPR_HOST_ADAPTER_VERSION', '0.1.0' );
+define( 'UPR_HOST_ADAPTER_VERSION', '0.1.1' );
 define( 'UPR_HOST_ADAPTER_FILE', __FILE__ );
 define( 'UPR_HOST_ADAPTER_PATH', plugin_dir_path( __FILE__ ) );
 

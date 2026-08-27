@@ -6,8 +6,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 fail() { echo "POLICY FAILED: $*" >&2; exit 1; }
 
 echo "==> Version / pin constants"
-grep -q "Version: 0.1.0" "$ROOT/upr-host-adapter.php" || fail "plugin header version"
-grep -q "UPR_HOST_ADAPTER_VERSION', '0.1.0'" "$ROOT/upr-host-adapter.php" || fail "version constant"
+grep -q "Version: 0.1.1" "$ROOT/upr-host-adapter.php" || fail "plugin header version"
+grep -q "License: GPL-2.0-or-later" "$ROOT/upr-host-adapter.php" || fail "plugin header license"
+grep -q "SPDX-License-Identifier: GPL-2.0-or-later" "$ROOT/LICENSE" || fail "LICENSE SPDX"
+if grep -qiE '^MIT License$' "$ROOT/LICENSE"; then fail "LICENSE must not be MIT"; fi
+grep -q "UPR_HOST_ADAPTER_VERSION', '0.1.1'" "$ROOT/upr-host-adapter.php" || fail "version constant"
 grep -q "REQUIRED_VERSION = '0.3.0'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin version"
 grep -q "REQUIRED_COMMIT = 'b2abc2defc30fc023601593aa1720cbfdd0a4f3c'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin commit"
 grep -q "REQUIRED_TAG = 'v0.3.0'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin tag"
