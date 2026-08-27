@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.1] — 2026-08-27
+
+### Fixed
+
+- Align repository `LICENSE` with the plugin header: **GPL-2.0-or-later** (was MIT contradiction at `v0.1.0`).
+
+### Notes
+
+- Corrective release. Annotated tag `v0.1.0` is retained and not moved.
+
 ## [0.1.0] — 2026-08-27
 
 ### Added

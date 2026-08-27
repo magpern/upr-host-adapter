@@ -57,3 +57,7 @@ This repository may be **public temporarily** so GitHub Actions can run. Do **no
 ## Production
 
 This README intentionally contains **no** production deployment instructions or real configuration values. Production rollout, if any, is documented in private host operations plans outside this repository.
+
+## License
+
+GPL-2.0-or-later. See [`LICENSE`](LICENSE).
