@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy-and-tests:
+    name: Policy, pin, and pilot checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - name: Policy / leakage
+        run: bash scripts/policy-check.sh
+      - name: Package pin matrix
+        run: bash scripts/package-pin-check.sh
+      - name: Pilot policy matrix
+        run: bash scripts/pilot-policy-check.sh
