@@ -22,14 +22,23 @@ This plugin is **not** UPR core. It wires host delivery/support signals and a re
 
 ## Version identity
 
-This repository’s first release is **`0.1.0`**. It supersedes the former embedded host candidate versioning under a different plugin identity. Do not treat older branded package versions as this plugin.
+Current release: **`0.1.1`** (annotated tag `v0.1.1`). First extraction release was `0.1.0`. Do not treat older branded embedded package versions (e.g. `biopentra-upr-host` `0.1.5`) as this plugin.
+
+## Private release package
+
+```bash
+git fetch --tags origin
+bash scripts/build-release-package.sh v0.1.1
+```
+
+Outputs under `builds/` (gitignored): `upr-host-adapter-0.1.1.zip` + `.SHA256SUMS`. Top-level directory must be `upr-host-adapter/`. No public GitHub Release is required for packaging.
 
 ## Local / development setup (generic)
 
 1. Check out this repository next to a WordPress + WooCommerce + UPR development stack.
 2. Bind-mount or symlink the plugin directory as `wp-content/plugins/upr-host-adapter`.
 3. Ensure UPR `0.3.0` is present with valid `release.meta.json` (or write it from a verified Git tag using UPR’s documented helper).
-4. Activate **UPR Host Adapter**.
+4. Activate **Universal Product Reviews first**, then **UPR Host Adapter** (`Requires Plugins: universal-product-reviews`).
 5. Leave UPR invitation emails **disabled** unless your rehearsal explicitly requires otherwise.
 6. Optional: map a support tickets table suffix via `upr_host_adapter_support_tickets_table` (empty = skip open-ticket checks).
 
