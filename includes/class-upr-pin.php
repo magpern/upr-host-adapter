@@ -14,11 +14,11 @@ defined( 'ABSPATH' ) || exit;
 
 final class Upr_Host_Adapter_Upr_Pin {
 
-	public const REQUIRED_VERSION = '0.3.0';
+	public const REQUIRED_VERSION = '0.9.0-rc.1';
 
-	public const REQUIRED_COMMIT = 'b2abc2defc30fc023601593aa1720cbfdd0a4f3c';
+	public const REQUIRED_COMMIT = '5b7a7d071658c89a0bbeec5b42689bc5d4fa8c8a';
 
-	public const REQUIRED_TAG = 'v0.3.0';
+	public const REQUIRED_TAG = 'v0.9.0-rc.1';
 
 	/** Generic package metadata filename (no host/brand names). */
 	public const PACKAGE_META_BASENAME = 'release.meta.json';
