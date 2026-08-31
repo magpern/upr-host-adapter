@@ -17,7 +17,7 @@ This plugin is **not** UPR core. It wires host delivery/support signals and a re
 ## Requirements
 
 - WordPress 6.5+, PHP 8.1+, WooCommerce
-- Universal Product Reviews **0.9.0-rc.1** @ commit `5b7a7d071658c89a0bbeec5b42689bc5d4fa8c8a` (annotated tag `v0.9.0-rc.1`)
+- Universal Product Reviews **0.9.0-rc.2** @ commit `06e406f4ba944b8360209322b3953d0a27f080bc` (annotated tag `v0.9.0-rc.2`)
 - Packaged UPR installs must include generic `release.meta.json` (`universal-product-reviews.package-meta/v1`)
 
 ## Version identity

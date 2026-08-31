@@ -11,9 +11,9 @@ grep -q "License: GPL-2.0-or-later" "$ROOT/upr-host-adapter.php" || fail "plugin
 grep -q "SPDX-License-Identifier: GPL-2.0-or-later" "$ROOT/LICENSE" || fail "LICENSE SPDX"
 if grep -qiE '^MIT License$' "$ROOT/LICENSE"; then fail "LICENSE must not be MIT"; fi
 grep -q "UPR_HOST_ADAPTER_VERSION', '0.1.1'" "$ROOT/upr-host-adapter.php" || fail "version constant"
-grep -q "REQUIRED_VERSION = '0.9.0-rc.1'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin version"
-grep -q "REQUIRED_COMMIT = '5b7a7d071658c89a0bbeec5b42689bc5d4fa8c8a'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin commit"
-grep -q "REQUIRED_TAG = 'v0.9.0-rc.1'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin tag"
+grep -q "REQUIRED_VERSION = '0.9.0-rc.2'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin version"
+grep -q "REQUIRED_COMMIT = '06e406f4ba944b8360209322b3953d0a27f080bc'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin commit"
+grep -q "REQUIRED_TAG = 'v0.9.0-rc.2'" "$ROOT/includes/class-upr-pin.php" || fail "UPR pin tag"
 grep -q 'InvitationAuthorisation' "$ROOT/includes/class-upr-pin.php" || fail "InvitationAuthorisation check"
 grep -q "PACKAGE_META_BASENAME = 'release.meta.json'" "$ROOT/includes/class-upr-pin.php" || fail "package meta"
 grep -q 'universal-product-reviews.package-meta/v1' "$ROOT/includes/class-upr-pin.php" || fail "package schema"
