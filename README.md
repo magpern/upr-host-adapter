@@ -17,12 +17,12 @@ This plugin is **not** UPR core. It wires host delivery/support signals and a re
 ## Requirements
 
 - WordPress 6.5+, PHP 8.1+, WooCommerce
-- Universal Product Reviews **0.3.0** @ commit `b2abc2defc30fc023601593aa1720cbfdd0a4f3c` (annotated tag `v0.3.0`)
+- Universal Product Reviews **0.9.0-rc.1** @ commit `5b7a7d071658c89a0bbeec5b42689bc5d4fa8c8a` (annotated tag `v0.9.0-rc.1`)
 - Packaged UPR installs must include generic `release.meta.json` (`universal-product-reviews.package-meta/v1`)
 
 ## Version identity
 
-Current release: **`0.1.1`** (annotated tag `v0.1.1`). First extraction release was `0.1.0`. Do not treat older branded embedded package versions (e.g. `biopentra-upr-host` `0.1.5`) as this plugin.
+Current release: **`0.1.1`** (annotated tag `v0.1.1`). First extraction release was `0.1.0`. Do not treat older embedded host package versions (e.g. legacy `0.1.5`) as this plugin.
 
 ## Private release package
 
