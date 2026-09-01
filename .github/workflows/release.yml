@@ -1,0 +1,82 @@
+name: Release
+
+# Triggered only by an exact version tag pushed to the repository.
+# Tags are expected to point at a commit already merged to `main` and
+# already green on CI. This workflow re-runs the quality gates, builds the
+# package from the immutable tag ref, verifies the package version equals
+# the tag, and publishes a GitHub Release with the ZIP + checksum attached.
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'
+
+# Only the permission required to create the Release. No other scope.
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build and publish ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact tagged commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Required quality gates
+        run: |
+          bash scripts/policy-check.sh
+          bash scripts/package-pin-check.sh
+          bash scripts/pilot-policy-check.sh
+
+      - name: Build release package from the immutable tag ref
+        run: |
+          git fetch --tags --force origin
+          bash scripts/build-release-package.sh "${GITHUB_REF_NAME}"
+
+      - name: Verify package version matches the Git tag
+        run: |
+          set -euo pipefail
+          tag_version="${GITHUB_REF_NAME#v}"
+          zip="builds/upr-host-adapter-${tag_version}.zip"
+          sums="builds/upr-host-adapter-${tag_version}.SHA256SUMS"
+          if [ ! -s "$zip" ] || [ ! -s "$sums" ]; then
+            echo "::error::expected $zip / $sums for tag ${GITHUB_REF_NAME}"
+            ls -la builds || true
+            exit 1
+          fi
+          ( cd builds && sha256sum -c "upr-host-adapter-${tag_version}.SHA256SUMS" )
+          header="$(sed -nE 's/^[[:space:]]*\*?[[:space:]]*Version:[[:space:]]*([0-9A-Za-z.-]+).*/\1/p' upr-host-adapter.php | head -n1)"
+          if [ "$header" != "$tag_version" ]; then
+            echo "::error::plugin header version ($header) != tag ($tag_version)"
+            exit 1
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            builds/upr-host-adapter-*.zip
+            builds/upr-host-adapter-*.SHA256SUMS
+          fail_on_unmatched_files: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+
+      # TODO(private artifact server): a follow-up change may add a step here
+      # that mirrors builds/upr-host-adapter-<version>.zip and its .SHA256SUMS
+      # to the internal artifact server. It must use a dedicated secret (never
+      # GITHUB_TOKEN), run only after the GitHub Release above succeeds, and
+      # fail loudly without rolling the Release back. Intentionally omitted:
+      # the endpoint, protocol, and secret are not defined for this repo yet.
