@@ -24,14 +24,54 @@ This plugin is **not** UPR core. It wires host delivery/support signals and a re
 
 Current release: **`0.1.1`** (annotated tag `v0.1.1`). First extraction release was `0.1.0`. Do not treat older embedded host package versions (e.g. legacy `0.1.5`) as this plugin.
 
-## Private release package
+## Release process
+
+Canonical version source: the plugin header `Version:` line **and** the
+`UPR_HOST_ADAPTER_VERSION` constant in `upr-host-adapter.php`, which must match.
+`scripts/policy-check.sh` and `scripts/package-pin-check.sh` additionally pin
+the literal version string and must be bumped in the same commit. The adapter
+is **independently versioned** — its version is unrelated to the pinned
+`universal-product-reviews` companion version (`REQUIRED_VERSION` in
+`includes/class-upr-pin.php`, checked separately by `package-pin-check.sh`).
+
+**Build locally**
 
 ```bash
 git fetch --tags origin
-bash scripts/build-release-package.sh v0.1.1
+bash scripts/build-release-package.sh v0.1.1        # immutable tag ref
+bash scripts/build-release-package.sh --worktree    # current tree (CI PR mode)
 ```
 
-Outputs under `builds/` (gitignored): `upr-host-adapter-0.1.1.zip` + `.SHA256SUMS`. Top-level directory must be `upr-host-adapter/`. No public GitHub Release is required for packaging.
+Outputs under `builds/` (gitignored, **never committed**):
+`upr-host-adapter-<version>.zip` + `upr-host-adapter-<version>.SHA256SUMS`.
+Sole top-level directory is `upr-host-adapter/`.
+
+**Validate locally**
+
+```bash
+( cd builds && sha256sum -c upr-host-adapter-<version>.SHA256SUMS )
+unzip -l builds/upr-host-adapter-<version>.zip
+```
+
+**Cut a release**
+
+1. Set the version in `upr-host-adapter.php` (header + constant) and in the
+   grep pins in `scripts/policy-check.sh` / `scripts/package-pin-check.sh`;
+   add a `CHANGELOG.md` entry. Merge to `main` (protected) and let CI go green.
+2. Create and push an annotated tag `vX.Y.Z` on that `main` commit
+   (`vX.Y.Z-rc.N` etc. → GitHub prerelease).
+3. `.github/workflows/release.yml` re-runs the policy/pin/pilot gates, builds
+   the package from the immutable tag ref, asserts the packaged version equals
+   the tag, and publishes a GitHub Release with the ZIP + `.SHA256SUMS`
+   attached.
+4. Download both assets from the Release page and verify:
+   `sha256sum -c upr-host-adapter-<version>.SHA256SUMS` before deployment.
+
+**Recover from a failed release**: the job fails before `Create GitHub Release`
+if any gate or the version check fails — fix the source on `main`, delete the
+bad tag, and re-tag. If publish itself failed, delete the partial Release and
+re-run the workflow (or re-push the tag). Generated ZIPs/checksums are CI
+outputs only and must not be committed.
 
 ## Local / development setup (generic)
 

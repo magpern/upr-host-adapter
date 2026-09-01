@@ -26,3 +26,27 @@ jobs:
         run: bash scripts/package-pin-check.sh
       - name: Pilot policy matrix
         run: bash scripts/pilot-policy-check.sh
+
+  package:
+    name: Release package (build validation, no publish)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Build package from the working tree
+        run: bash scripts/build-release-package.sh --worktree
+      - name: Verify artifact + checksum
+        run: |
+          set -euo pipefail
+          zip="$(ls builds/upr-host-adapter-*.zip)"
+          sums="$(ls builds/upr-host-adapter-*.SHA256SUMS)"
+          test -s "$zip"
+          test -s "$sums"
+          echo "== ZIP contents =="
+          unzip -l "$zip"
+          ( cd builds && sha256sum -c "$(basename "$sums")" )
+          names="$(unzip -Z1 "$zip")"
+          test "$(printf '%s\n' "$names" | cut -d/ -f1 | sort -u)" = "upr-host-adapter"
+          printf '%s\n' "$names" | grep -qx 'upr-host-adapter/upr-host-adapter.php'
+          ! printf '%s\n' "$names" | grep -qE '(^|/)(\.git|\.github|tests|scripts)/'
