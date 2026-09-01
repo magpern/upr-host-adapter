@@ -22,7 +22,7 @@ This plugin is **not** UPR core. It wires host delivery/support signals and a re
 
 ## Version identity
 
-Current release: **`0.1.1`** (annotated tag `v0.1.1`). First extraction release was `0.1.0`. Do not treat older embedded host package versions (e.g. legacy `0.1.5`) as this plugin.
+Current release: **`0.1.2`** (annotated tag `v0.1.2`). Prior releases: `0.1.1` (LICENSE alignment), `0.1.0` (initial extraction). Do not treat older embedded host package versions (e.g. legacy `0.1.5`) as this plugin.
 
 ## Release process
 
@@ -38,7 +38,7 @@ is **independently versioned** — its version is unrelated to the pinned
 
 ```bash
 git fetch --tags origin
-bash scripts/build-release-package.sh v0.1.1        # immutable tag ref
+bash scripts/build-release-package.sh v0.1.2        # immutable tag ref
 bash scripts/build-release-package.sh --worktree    # current tree (CI PR mode)
 ```
 

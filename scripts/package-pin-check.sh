@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# M3 packaged UPR pin checks for upr-host-adapter 0.1.1+ (no site deploy).
+# M3 packaged UPR pin checks for upr-host-adapter 0.1.2+ (no site deploy).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 fail() { echo "PACKAGE PIN FAILED: $*" >&2; exit 1; }
 
-echo "==> Host 0.1.1 + package meta pin"
-grep -q "Version: 0.1.1" "$ROOT/upr-host-adapter.php" || fail "plugin header version"
+echo "==> Host 0.1.2 + package meta pin"
+grep -q "Version: 0.1.2" "$ROOT/upr-host-adapter.php" || fail "plugin header version"
 grep -q "PACKAGE_META_BASENAME = 'release.meta.json'" "$ROOT/includes/class-upr-pin.php" || fail "meta basename"
 grep -q 'universal-product-reviews.package-meta/v1' "$ROOT/includes/class-upr-pin.php" || fail "meta schema"
 if grep -nE "['\"]/\.git|/\.git'|/\.git\"|\.git/HEAD" "$ROOT/includes/class-upr-pin.php"; then

@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.2] — 2026-09-02
+
+### Changed
+
+- Companion pin (`Upr_Host_Adapter_Upr_Pin`) now requires Universal Product
+  Reviews **`0.9.0-rc.2`** (`06e406f4ba944b8360209322b3953d0a27f080bc`,
+  tag `v0.9.0-rc.2`), was `0.3.0`. Aligns the DEV bind-mount validation with
+  the current UPR release candidate. The adapter is independently versioned;
+  this pin change is the reason for the `0.1.2` bump.
+- `scripts/policy-check.sh`, `scripts/pilot-policy-check.sh`,
+  `scripts/package-pin-check.sh` version pins bumped to `0.1.2`.
+
+### Added
+
+- Tag-triggered GitHub Release workflow (`.github/workflows/release.yml`) and a
+  CI packaging-validation job; `scripts/build-release-package.sh` gains a
+  `--worktree` mode. Generated ZIP/checksum are CI outputs, never committed.
+
 ## [0.1.1] — 2026-08-27
 
 ### Fixed
