@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.3] — 2026-09-02
+
+### Added
+
+- Self-updates from a private update server via the bundled Plugin Update Checker v5 library (`lib/plugin-update-checker/`); active only when `PRIVATE_UPDATE_SERVER` is defined in `wp-config.php`. Bespoke updater not previously present.
+
 ## [0.1.2] — 2026-09-02
 
 ### Changed

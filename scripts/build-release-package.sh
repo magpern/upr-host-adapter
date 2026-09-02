@@ -4,7 +4,7 @@
 #
 # Two modes:
 #   1. Immutable-ref mode (default, used by release.yml):
-#        scripts/build-release-package.sh v0.1.2
+#        scripts/build-release-package.sh v0.1.3
 #      Packages the tree at an exact annotated tag and asserts
 #      tag == "v<header version>" == "v<UPR_HOST_ADAPTER_VERSION>".
 #
@@ -34,7 +34,7 @@ cd "${ROOT}"
 usage() { sed -n '2,32p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
 
 MODE="ref"
-REF="v0.1.2"
+REF="v0.1.3"
 case "${1:-}" in
 	-h|--help) usage 0 ;;
 	--worktree) MODE="worktree" ;;

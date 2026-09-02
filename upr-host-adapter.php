@@ -2,7 +2,7 @@
 /**
  * Plugin Name: UPR Host Adapter
  * Description: Host-side adapters for Universal Product Reviews (delivery, support, pilot policy, DEV verification).
- * Version: 0.1.2
+ * Version: 0.1.3
  * Author: UPR Host Adapter contributors
  * Requires at least: 6.5
  * Requires PHP: 8.1
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'UPR_HOST_ADAPTER_VERSION', '0.1.2' );
+define( 'UPR_HOST_ADAPTER_VERSION', '0.1.3' );
 define( 'UPR_HOST_ADAPTER_FILE', __FILE__ );
 define( 'UPR_HOST_ADAPTER_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -27,6 +27,20 @@ require_once UPR_HOST_ADAPTER_PATH . 'includes/class-invitation-send-policy.php'
 require_once UPR_HOST_ADAPTER_PATH . 'includes/class-review-availability-ux.php';
 require_once UPR_HOST_ADAPTER_PATH . 'includes/class-admin-settings.php';
 require_once UPR_HOST_ADAPTER_PATH . 'includes/class-plugin.php';
+
+/**
+ * Automatic updates via the private update server. Define PRIVATE_UPDATE_SERVER
+ * (scheme + host, no trailing slash) in wp-config.php to enable; when it is not
+ * defined the plugin does not check for updates.
+ */
+if ( defined( 'PRIVATE_UPDATE_SERVER' ) && PRIVATE_UPDATE_SERVER ) {
+	require_once UPR_HOST_ADAPTER_PATH . 'lib/plugin-update-checker/plugin-update-checker.php';
+	\YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		rtrim( (string) PRIVATE_UPDATE_SERVER, '/' ) . '/?action=get_metadata&slug=upr-host-adapter',
+		UPR_HOST_ADAPTER_FILE,
+		'upr-host-adapter'
+	);
+}
 
 add_action(
 	'plugins_loaded',
